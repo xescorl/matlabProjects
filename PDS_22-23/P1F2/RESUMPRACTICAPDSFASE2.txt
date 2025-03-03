@@ -1,0 +1,55 @@
+appdesigner a comandes
+
+sa de ficar tot el que hi hagi a la ilustracio 1
+
+axes,image,boton,label,knob(potenciometro ganancia filtros)
+menu bar,switch,edit field numerico
+ 
+callback,funcio que sexecuta quan lusuari interactua
+amb alguna funcio del UI.
+
+GUI A CREAR:
+--Menu bar i about a dalt a on archivo per alli dalt
+--9 knobs per a ganancies frequencies i amples de banda
+--Switch de frequencia o temps
+--2 axes que canvien en funcio del switch
+--2 botons per reproduir o parar audio
+--switch2 reproducir audio original o señal filtrada
+--funcion privada plotSignals() que modifique el 
+valor de las graficas que se visualizen teniendo en
+cuenta el switch
+--funcion privada getCoeficients() actualiza los 
+coeficientes de los filtros cuando modifiquemos algun
+parametro de las 3 bandas de filtros.
+--funcion privada filterEqu() que aplica el filtrado
+de la señal cuando se modifica algun parametro de las
+3 bandas.
+--todos los callbacks necessarios a los elementos
+interactivos de la interfaz
+--definir una Property() privada con todas las variables
+globales
+
+AXE1-->resposta impulsional del filtre en segons
+o si el switch esta en laltra posició volem dB i hz.
+AXE2-->senyals dentada i sortida del banc de filtres
+igual que abans depenent del switch sera la forma
+d'ona amb segons o be els dB en Hz.
+AXE3-->DIAGRAMA DE POLS I ZEROS del banc de filtres
+amb el cercle unitat
+
+
+RESUM PAG10.CODI
+Primero crear Property() con todas las variables 
+globale.
+Para acceder a una variable hacer-->app.<nombre variable>
+para modificar valor elemento-->app.nombre_elemento.Value
+S'han dimplementar les funcions privades i callbacks 
+necesaris pera a la interacció amb la interfaç
+Para que los axes de adapten a la interfaz 
+incluir: ylim(app.UIAxes,'auto');
+ o xlim(app.UIAxes3,'auto'). 
+Para modificar o añadir alguna propiedad de los ejes,
+por ejemplo, un título del eje X, siempre hay que añadir
+como primer argumento el nombre del eje que se quiere
+modificar, por ejemplo
+title(app.UIAxes,'Filterbank Gain','Color','w').

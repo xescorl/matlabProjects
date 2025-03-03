@@ -1,0 +1,52 @@
+% Genera un vector fila de 51 muestras que contenga una única delta de Dirac
+% en la posición mitad, y llámalo "delta"
+x = -0.025:0.001:0.025;
+y = dirac(x);
+idx = y == Inf; % find Inf
+y(idx) = 1;     % set Inf to finite value
+delta = y;
+stem(x,y)
+% Genera el vector de tiempo de esta señal (valores en segundos) de la misma duración, teninendo 
+% en cuenta que la delta está el orígen (t = 0) y que la frecuencia de muestro es de 1000 Hz.
+fs = 1000;
+t = -0.025:0.001:0.025;
+% Genera ahora otra señal con nombre "x", formada por un pulso rectangular de 
+% amplitud 1 que, teninedo el mismo vector de tiempo anterior, tenga sus valores no nulos 
+% del tiempo t = 0 hasta t = 0.012 s (ambos incluidos).
+M = 13;% Calcula primero el número de muestras del pulso rectangular
+temps = -0.025:0.001:0.025;
+t1 = -0.025:0.001:-0.001;
+t2 = 0:0.001:0.012;
+t3 = 0.013:0.001:0.025;
+x1=zeros(size(t1));
+x2 = ones(size(t2));
+x3 = zeros(size(t3));
+x = [x1 x2 x3];
+stem(temps,x);
+
+
+% Calcula de la respuesta impulsional del sistema derivador, en el mismo rango de tiempo, y llámala "h"
+% Implementa usando bucles (for) un sistema derivador, calculando su salida cuando la entrada sea 
+% la delta de Dirac anterior. Ten en cuenta que el registro o memoria del derivador está reseteado inicialmente, 
+% y que para la última muestra de salida puedes suponer que la delta vale cero en la posición 52.
+
+for n = 51
+ h(n) = y*(n+1) - 2*y*(n) + y*(n-1)
+end
+
+% Ahora calcula la salida del mismo sistema para la señal generada "x" usando los mismos bucles, y llámala "y"
+
+%for n = 
+ %   y(n) = 
+%end
+
+
+% Calcula ahora la salida para la misma entrada "x" pero usando la llamada a
+% la función conv. Ten en cuenta que en este método de cálculo la señal tiene mayor
+% duración, pues la duración de la convolución entre dos señales finitas puede llegar a
+% ser la suma de sus longitudes menos 1. Quédate sólo con las muestras de "y2"  
+% de las posiciones 26 a la 76. Llama a la señal generada y2
+
+%y2 = 
+
+% Dibuja los resultados usando las funciones stem, grid, subplot, xlabel, ylabel, title
