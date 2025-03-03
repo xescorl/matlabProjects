@@ -1,0 +1,23 @@
+lineals generals,hamming,reed solomon
+hard decision decoding
+
+Trans de 4*10^6 bits en Binary symetric channel, amb probabilitat
+p de transmisio i obtenir la prob error un cop descodificat,hem de
+simular per 9 valors de p d'acord amb expresio pag3.
+
+Funcio que implementi les 3 simulacions de cada codi.
+k-->nombre de bits dentrada codificador:paraula entrada
+n-->nombre de bits sortida codificador:paraula sortida
+
+Codificar per cada codi fer passar pel canal descodificar trobar
+prob error
+
+CODI LINEAL:
+Matriu generadora conformada pels vectors que fan de base del
+subespai.
+Si es sistematic la paraula missatge es troba dins de la paraula
+codi.
+P=kx(n-k)
+H=nx(n-k) verificacio de paritat
+p=P*m que son els bits de paritat del codi
+
