@@ -1,0 +1,53 @@
+function [SOS_LP,SOS_BP,SOS_HP] = freqResponseGlobal(dB_LP,dB_BP,dB_HP)
+    N = 10000;
+    x = [1;zeros(N-1,1)];
+    fs = 44100;
+
+    [SOS_LP,G_LP,SOS_BP,G_BP,SOS_HP,G_HP] = retrieveSOS("filtersSOS.mat");
+
+    SOS_HP(1,1:3) = SOS_HP(1,1:3)*prod(G_HP)*10^(dB_HP/20);
+    h_HP = sosfilt(SOS_HP,x);
+
+    SOS_BP(1,1:3) = SOS_BP(1,1:3)*prod(G_BP)*10^(dB_BP/20);
+    h_BP = sosfilt(SOS_BP,x);
+
+    SOS_LP(1,1:3) = SOS_LP(1,1:3)*prod(G_LP)*10^(dB_LP/20);
+    h_LP = sosfilt(SOS_LP,x);
+
+    % Pel filtre global les matrius SOS han dincorporar el guany passat a
+    % lineal
+    [H_LP,f] = freqz(h_LP,1,2048,fs);
+    [H_BP,f] = freqz(h_BP,1,2048,fs);
+    [H_HP,f] = freqz(h_HP,1,2048,fs);
+
+    phi= phase(H_LP+H_HP+H_BP);
+
+    minim = min([dB_LP dB_BP dB_HP]) - 20;
+    maxim = max([dB_LP dB_BP dB_HP]) + 20;
+
+    tiledlayout('vertical')
+
+    semilogx(nexttile,f,20*log10(abs(H_LP)),f,20*log10(abs(H_BP)),f,20*log10(abs(H_HP)));
+    ylim([minim maxim])
+    xlim([10 fs/2])
+    grid on 
+    title('Individual filters')
+    legend('Lowpass filter','Bandpass filter','Highpass filter')
+    xlabel('Frequency (Hz)')
+    ylabel('Magnitude (dB)')
+    
+    semilogx(nexttile,f,20*log10(abs(H_LP+H_BP+H_HP)));
+    ylim([minim maxim])
+    xlim([10 fs/2])
+    grid on 
+    title('Custom Filter Response')
+    xlabel('Frequency (Hz)')
+    ylabel('Magnitude (dB)')
+
+    plot(nexttile,f,phi);
+    grid on
+    xlim([10 fs/2])
+    title('Custom Filter Phase')
+    xlabel('Frequency (Hz)')
+    ylabel('Phase (degrees)')
+end
