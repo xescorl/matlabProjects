@@ -1,0 +1,11 @@
+
+    subplot(5,1,1)
+    plot(t,y1)
+    subplot(5,1,2)
+    plot(t,y2)
+    subplot(5,1,3)
+    plot(t,y3)
+    subplot(5,1,4)
+    plot(t,y4)
+    subplot(5,1,5)
+    plot(t,y5)
